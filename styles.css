@@ -1,0 +1,197 @@
+:root {
+  --bg-top: #fff177;
+  --bg-middle: #ff8a5b;
+  --bg-bottom: #42d6ff;
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --text-main: #11203b;
+  --text-soft: #31507f;
+  --accent: #ff3d71;
+  --accent-hover: #e1285d;
+  --field-border: #ffd44d;
+  --shadow: 0 24px 60px rgba(17, 32, 59, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.55), transparent 30%),
+    linear-gradient(145deg, var(--bg-top), var(--bg-middle) 45%, var(--bg-bottom));
+}
+
+.page-shell {
+  position: relative;
+  width: min(100%, 960px);
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.version-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(17, 32, 59, 0.9);
+  color: #fff;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  box-shadow: var(--shadow);
+}
+
+.hero-banner {
+  margin-top: 48px;
+  padding: 28px 24px;
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.1)),
+    #ffcd38;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.hero-kicker {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.hero-banner h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1.05;
+}
+
+.hero-copy {
+  width: min(100%, 620px);
+  margin: 16px auto 0;
+  font-size: 1.08rem;
+  color: var(--text-soft);
+}
+
+.card {
+  margin-top: 28px;
+  padding: 28px 24px;
+  border-radius: 28px;
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+}
+
+.intro h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.intro p {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+}
+
+.comment-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.comment-form label {
+  font-weight: 700;
+}
+
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 3px solid var(--field-border);
+  border-radius: 18px;
+  background: #fffdf5;
+  color: var(--text-main);
+  font: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+  outline: none;
+  border-color: #1dbbf4;
+  transform: translateY(-1px);
+}
+
+.comment-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.comment-form button {
+  justify-self: start;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 14px 26px rgba(255, 61, 113, 0.28);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.comment-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: var(--accent-hover);
+}
+
+.comment-form button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.status-message {
+  min-height: 1.5em;
+  margin: 4px 0 0;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.status-message.is-success {
+  color: #137c35;
+}
+
+.status-message.is-error {
+  color: #b11e43;
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    padding: 20px 14px 36px;
+  }
+
+  .version-badge {
+    position: static;
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+
+  .hero-banner {
+    margin-top: 0;
+    padding: 24px 18px;
+  }
+
+  .card {
+    padding: 22px 18px;
+  }
+
+  .comment-form button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
