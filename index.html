@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VGRepo1 Sheet</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="version-badge" id="versionBadge">Version loading...</div>
+
+      <header class="hero-banner">
+        <p class="hero-kicker">Share your thoughts</p>
+        <h1>VGRepo1 sheet</h1>
+        <p class="hero-copy">
+          Enter your name and comment below. Every submission is recorded in the
+          connected Google Sheet.
+        </p>
+      </header>
+
+      <main class="card">
+        <section class="intro">
+          <h2>Comment Form</h2>
+          <p>
+            Fill in your first name, last name, and comment, then press submit.
+          </p>
+        </section>
+
+        <form id="commentForm" class="comment-form" novalidate>
+          <label for="firstName">First name</label>
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            maxlength="80"
+            autocomplete="given-name"
+            required
+          />
+
+          <label for="lastName">Last name</label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            maxlength="80"
+            autocomplete="family-name"
+            required
+          />
+
+          <label for="comment">Comment</label>
+          <textarea
+            id="comment"
+            name="comment"
+            rows="5"
+            maxlength="500"
+            placeholder="Write your comment here..."
+            required
+          ></textarea>
+
+          <button id="submitButton" type="submit">Submit</button>
+          <p id="statusMessage" class="status-message" aria-live="polite"></p>
+        </form>
+      </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
