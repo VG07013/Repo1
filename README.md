@@ -79,3 +79,5 @@ The badge also shows the short commit hash.
 ## Local preview
 
 You can open `index.html` in a browser for a quick preview, but the version badge works best once the site is served through GitHub Pages or another local web server.
+
+nik working
