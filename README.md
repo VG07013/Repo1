@@ -1,6 +1,6 @@
 # VGRepo1 Sheet
 
-This project is a free website you can publish with GitHub Pages. Your friends can open the link, enter their first name, last name, and a comment, and the form will send those responses into a Google Sheet.
+This project is a free website you can publish with GitHub Pages. People can open the link, enter their name, email address, and phone number, and the form will send those responses into a Google Sheet.
 
 ## What is included
 
@@ -8,6 +8,7 @@ This project is a free website you can publish with GitHub Pages. Your friends c
 - A version badge in the corner
 - Automatic version updates on every GitHub Pages deployment
 - A ready-to-paste Google Apps Script backend that writes submissions to Google Sheets
+- A simple form with `Name`, `Email address`, and `Phone number`
 
 ## Files you will use
 
@@ -79,5 +80,3 @@ The badge also shows the short commit hash.
 ## Local preview
 
 You can open `index.html` in a browser for a quick preview, but the version badge works best once the site is served through GitHub Pages or another local web server.
-
-nik working

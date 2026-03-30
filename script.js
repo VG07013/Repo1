@@ -2,9 +2,12 @@ const form = document.getElementById("commentForm");
 const submitButton = document.getElementById("submitButton");
 const statusMessage = document.getElementById("statusMessage");
 const versionBadge = document.getElementById("versionBadge");
+const captchaQuestion = document.getElementById("captchaQuestion");
+const captchaAnswer = document.getElementById("captchaAnswer");
 
 const appConfig = window.APP_CONFIG || {};
 const scriptUrl = appConfig.googleScriptUrl || "";
+let expectedCaptchaAnswer = null;
 
 function setStatus(message, type) {
   statusMessage.textContent = message;
@@ -43,6 +46,14 @@ function validateConfig() {
   );
 }
 
+function generateCaptcha() {
+  const firstNumber = Math.floor(Math.random() * 8) + 2;
+  const secondNumber = Math.floor(Math.random() * 8) + 2;
+  expectedCaptchaAnswer = firstNumber + secondNumber;
+  captchaQuestion.textContent = `What is ${firstNumber} + ${secondNumber}?`;
+  captchaAnswer.value = "";
+}
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   setStatus("");
@@ -55,7 +66,15 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
+  if (Number(captchaAnswer.value) !== expectedCaptchaAnswer) {
+    setStatus("CAPTCHA answer is incorrect. Please try again.", "error");
+    generateCaptcha();
+    captchaAnswer.focus();
+    return;
+  }
+
   const formData = new FormData(form);
+  formData.delete("captchaAnswer");
 
   submitButton.disabled = true;
   submitButton.textContent = "Submitting...";
@@ -68,7 +87,11 @@ form.addEventListener("submit", async (event) => {
     });
 
     form.reset();
-    setStatus("Submitted successfully. Your response should appear in the sheet shortly.", "success");
+    generateCaptcha();
+    setStatus(
+      "Submitted successfully. The name, email, and phone number should appear in your sheet shortly.",
+      "success"
+    );
   } catch (error) {
     setStatus("Submission failed. Please try again in a moment.", "error");
   } finally {
@@ -77,4 +100,5 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
+generateCaptcha();
 loadVersion();

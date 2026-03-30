@@ -1,5 +1,5 @@
 const SHEET_NAME = "Responses";
-const HEADERS = ["Timestamp", "First Name", "Last Name", "Comment"];
+const HEADERS = ["Timestamp", "Name", "Email", "Phone"];
 
 function doGet() {
   return ContentService.createTextOutput(
@@ -13,18 +13,18 @@ function doGet() {
 function doPost(e) {
   try {
     const sheet = getSheet_();
-    const firstName = clean_(e.parameter.firstName);
-    const lastName = clean_(e.parameter.lastName);
-    const comment = clean_(e.parameter.comment);
+    const fullName = clean_(e.parameter.fullName);
+    const email = clean_(e.parameter.email);
+    const phone = clean_(e.parameter.phone);
 
-    if (!firstName || !lastName || !comment) {
+    if (!fullName || !email || !phone) {
       return response_({
         ok: false,
-        error: "First name, last name, and comment are required.",
+        error: "Name, email, and phone are required.",
       });
     }
 
-    sheet.appendRow([new Date(), firstName, lastName, comment]);
+    sheet.appendRow([new Date(), fullName, email, phone]);
 
     return response_({
       ok: true,
