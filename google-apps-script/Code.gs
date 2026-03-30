@@ -1,5 +1,8 @@
 const SHEET_NAME = "Responses";
 const HEADERS = ["Timestamp", "Name", "Email", "Phone"];
+const NAME_REGEX = /^[A-Za-z ]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^\d+$/;
 
 function doGet() {
   return ContentService.createTextOutput(
@@ -17,10 +20,31 @@ function doPost(e) {
     const email = clean_(e.parameter.email);
     const phone = clean_(e.parameter.phone);
 
-    if (!fullName || !email || !phone) {
+    if (!fullName || !phone) {
       return response_({
         ok: false,
-        error: "Name, email, and phone are required.",
+        error: "Name and phone are required.",
+      });
+    }
+
+    if (!NAME_REGEX.test(fullName)) {
+      return response_({
+        ok: false,
+        error: "Name can contain only letters and spaces.",
+      });
+    }
+
+    if (email && !EMAIL_REGEX.test(email)) {
+      return response_({
+        ok: false,
+        error: "Email must be blank or in a valid format.",
+      });
+    }
+
+    if (!PHONE_REGEX.test(phone)) {
+      return response_({
+        ok: false,
+        error: "Phone number can contain digits only.",
       });
     }
 

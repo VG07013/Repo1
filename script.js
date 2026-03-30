@@ -4,10 +4,16 @@ const statusMessage = document.getElementById("statusMessage");
 const versionBadge = document.getElementById("versionBadge");
 const captchaQuestion = document.getElementById("captchaQuestion");
 const captchaAnswer = document.getElementById("captchaAnswer");
+const fullNameInput = document.getElementById("fullName");
+const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
 
 const appConfig = window.APP_CONFIG || {};
 const scriptUrl = appConfig.googleScriptUrl || "";
-let expectedCaptchaAnswer = null;
+let expectedCaptchaAnswer = Number(captchaQuestion.dataset.answer || "7");
+const namePattern = /^[A-Za-z ]+$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const digitsPattern = /^\d+$/;
 
 function setStatus(message, type) {
   statusMessage.textContent = message;
@@ -46,13 +52,57 @@ function validateConfig() {
   );
 }
 
+function updateSubmitState() {
+  submitButton.disabled = Number(captchaAnswer.value) !== expectedCaptchaAnswer;
+}
+
+function validateFormFields() {
+  const fullName = fullNameInput.value.trim();
+  const email = emailInput.value.trim();
+  const phone = phoneInput.value.trim();
+
+  if (!fullName || !namePattern.test(fullName)) {
+    setStatus("Name can contain only letters and spaces.", "error");
+    fullNameInput.focus();
+    return false;
+  }
+
+  if (email && !emailPattern.test(email)) {
+    setStatus("If you enter an email address, it must be in a valid format.", "error");
+    emailInput.focus();
+    return false;
+  }
+
+  if (!phone || !digitsPattern.test(phone)) {
+    setStatus("Phone number can contain digits only.", "error");
+    phoneInput.focus();
+    return false;
+  }
+
+  return true;
+}
+
 function generateCaptcha() {
   const firstNumber = Math.floor(Math.random() * 8) + 2;
   const secondNumber = Math.floor(Math.random() * 8) + 2;
   expectedCaptchaAnswer = firstNumber + secondNumber;
   captchaQuestion.textContent = `What is ${firstNumber} + ${secondNumber}?`;
   captchaAnswer.value = "";
+  updateSubmitState();
 }
+
+fullNameInput.addEventListener("input", () => {
+  fullNameInput.value = fullNameInput.value.replace(/[^A-Za-z ]+/g, "");
+});
+
+phoneInput.addEventListener("input", () => {
+  phoneInput.value = phoneInput.value.replace(/\D+/g, "");
+});
+
+captchaAnswer.addEventListener("input", () => {
+  setStatus("");
+  updateSubmitState();
+});
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -63,6 +113,10 @@ form.addEventListener("submit", async (event) => {
       "Google Apps Script URL is not configured yet. Update config.js first.",
       "error"
     );
+    return;
+  }
+
+  if (!validateFormFields()) {
     return;
   }
 
@@ -95,8 +149,8 @@ form.addEventListener("submit", async (event) => {
   } catch (error) {
     setStatus("Submission failed. Please try again in a moment.", "error");
   } finally {
-    submitButton.disabled = false;
     submitButton.textContent = "Submit";
+    updateSubmitState();
   }
 });
 

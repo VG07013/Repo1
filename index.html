@@ -36,6 +36,9 @@
             type="text"
             maxlength="120"
             autocomplete="name"
+            pattern="[A-Za-z ]+"
+            title="Name can contain only letters and spaces."
+            placeholder="Enter your full name"
             required
           />
 
@@ -46,7 +49,7 @@
             type="email"
             maxlength="120"
             autocomplete="email"
-            required
+            placeholder="Optional"
           />
 
           <label for="phone">Phone number</label>
@@ -54,16 +57,19 @@
             id="phone"
             name="phone"
             type="tel"
-            maxlength="40"
+            maxlength="20"
             autocomplete="tel"
-            placeholder="e.g. 555-123-4567"
+            inputmode="numeric"
+            pattern="[0-9]+"
+            title="Phone number can contain digits only."
+            placeholder="Digits only"
             required
           />
 
           <div class="captcha-panel">
             <p class="captcha-label">Basic CAPTCHA check</p>
-            <p class="captcha-question" id="captchaQuestion">
-              Solve the math question to continue.
+            <p class="captcha-question" id="captchaQuestion" data-answer="7">
+              What is 3 + 4?
             </p>
             <label for="captchaAnswer">Your answer</label>
             <input
